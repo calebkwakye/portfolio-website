@@ -1,0 +1,276 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}" />
+
+    <!-- ===== BOX ICONS ===== -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <title>Caleb's Portfolio</title>
+  </head>
+  <body>
+    <!--===== HEADER =====-->
+    <header class="l-header">
+      <nav class="nav bd-grid">
+        <div>
+          <a href="#" class="nav__logo">{{ home.name }}</a>
+        </div>
+
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="#home" class="nav__link active">Home</a>
+            </li>
+            <li class="nav__item">
+              <a href="#about" class="nav__link">About</a>
+            </li>
+            <li class="nav__item">
+              <a href="#skills" class="nav__link">Skills</a>
+            </li>
+            <li class="nav__item">
+              <a href="#portfolio" class="nav__link">Projects</a>
+            </li>
+            <li class="nav__item">
+              <a href="#contact" class="nav__link">Contact</a>
+            </li>
+            <li class="nav__item">
+              <a
+                href="{% static 'assets/resume/caleb_kwakye_resume.pdf' %}"
+                class="nav__link"
+                target="_blank"
+                >Resume</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav__toggle" id="nav-toggle">
+          <i class="bx bx-menu"></i>
+        </div>
+      </nav>
+    </header>
+
+    <main class="l-main">
+      <!--===== HOME =====-->
+      <section class="home" id="home">
+        <div class="home__container bd-grid">
+          <h1 class="home__title">
+            <span>{{ home.greetings_1 }}</span><br />{{ home.greetings_2 }}
+          </h1>
+
+          <div class="home__scroll">
+            <a href="#about" class="home__scroll-link"
+              ><i class="bx bx-up-arrow-alt"></i>Scroll down</a
+            >
+          </div>
+
+          <img src="{{ home.picture.url }}" alt="" class="home__img" />
+        </div>
+      </section>
+
+      <!--===== ABOUT =====-->
+      <section class="about section" id="about">
+        <h2 class="section-title">About</h2>
+
+        <div class="about__container bd-grid">
+          <div class="about__img">
+            <img src="{{ about.profile_img.url }}" alt="" />
+          </div>
+
+          <div>
+            <h2 class="about__subtitle">{{ about.heading }}</h2>
+            <span class="about__profession">{{ about.career }}</span>
+            <p class="about__text">{{ about.description }}</p>
+
+            <div class="about__social">
+              <a
+                href="https://www.linkedin.com/in/caleb-kwakye-862594236"
+                class="about__social-icon"
+                ><i class="bx bxl-linkedin"></i
+              ></a>
+              <a
+                href="https://github.com/calebkwakye"
+                class="about__social-icon"
+                ><i class="bx bxl-github"></i
+              ></a>
+              <a
+                href="https://www.instagram.com/kaylebparker/"
+                class="about__social-icon"
+                ><i class="bx bxl-instagram"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--===== SKILLS =====-->
+      <section class="skills section" id="skills">
+        <h2 class="section-title">Skills</h2>
+
+        <div class="skills__container bd-grid">
+          <div class="skills__box">
+            {% for category in categories %}
+            <h1 class="skills__subtitle">{{ category.name }}</h1>
+            {% for skills in category.skills_set.all %}
+            <ul>
+              <span class="skills__name">{{ skills.skill_name}}</span>
+            </ul>
+            {% endfor %} {% endfor %}
+          </div>
+
+          <div class="skills__img">
+            <img src="{% static 'assets/img/ur.avif' %}" alt="" />
+          </div>
+        </div>
+      </section>
+
+      <!--===== PORTFOLIO =====-->
+      <section class="portfolio section" id="portfolio">
+        <h2 class="section-title">Projects</h2>
+
+        <div class="portfolio__container bd-grid">
+          {% for portfolio in portfolios %}
+          <div class="portfolio__item">
+            <div class="portfolio__img">
+                {% if portfolio.video %}
+                <video src="{{ portfolio.video.url }}" playsinline autoplay muted loop>
+                    Your browser does not support the video tag.
+                </video>
+                {% else %}
+                <img src="{{ portfolio.image.url }}" alt="">
+                {% endif %}
+              <div class="portfolio__link">
+                <a href="{{ portfolio.link }}" class="portfolio__link-name" target="_blank">View Project</a>
+              </div>
+            </div>
+            <div class="portfolio__content">
+              <h3 class="portfolio__title">{{ portfolio.title }}</h3>
+              <p class="portfolio__description">{{ portfolio.description }}</p>
+              <div class="portfolio__technologies-container">
+                <div id="tech_used">Built with:</div>
+                <p class="portfolio__technologies">
+                  {{ portfolio.technologies }}
+                </p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+
+      <!--===== CONTACT =====-->
+      <section class="contact section" id="contact">
+        <h2 class="section-title">Contact</h2>
+
+        <div class="contact__container bd-grid">
+          <div class="contact__info">
+            <h3 class="contact__subtitle">EMAIL</h3>
+            <span class="contact__text">caleb.kwakye@richmond.edu</span>
+
+            <h3 class="contact__subtitle">PHONE</h3>
+            <span class="contact__text">804-397-6824</span>
+
+            <h3 class="contact__subtitle">ADDRESS</h3>
+            <ul>
+              <span class="contact__text">UR 1368</span>
+            </ul>
+            <ul>
+              <span class="contact__text">410 Westhampton Way</span>
+            </ul>
+            <ul>
+              <span class="contact__text">Richmond</span>
+            </ul>
+            <ul>
+              <span class="contact__text">Virginia</span>
+            </ul>
+          </div>
+
+          <form
+            action="{% url 'submit_form' %}"
+            class="contact__form"
+            method="POST"
+          >
+            {% csrf_token %}
+            <div class="contact__inputs">
+              <input
+                type="text"
+                name="user_name"
+                placeholder="Name"
+                class="contact__input"
+              />
+              <input
+                type="email"
+                name="user_email"
+                placeholder="Email"
+                class="contact__input"
+              />
+            </div>
+
+            <textarea
+              name="user_message"
+              id=""
+              cols="0"
+              rows="10"
+              class="contact__input"
+            ></textarea>
+
+            <input type="submit" value="Send" class="contact__button" />
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!--===== FOOTER =====-->
+    <footer class="footer section">
+      <div class="footer__container bd-grid">
+        <div class="footer__data">
+          <h2 class="footer__title">EXPLORE</h2>
+          <ul>
+            <li><a href="#home" class="footer__link">Home</a></li>
+            <li><a href="#about" class="footer__link">About</a></li>
+            <li><a href="#skills" class="footer__link">Skills</a></li>
+            <li><a href="#portfolio" class="footer__link">Projects</a></li>
+            <li><a href="#Contact" class="footer__link">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__data">
+          <h2 class="footer__title">FOLLOW</h2>
+          <a
+            href="https://www.linkedin.com/in/caleb-kwakye-862594236"
+            class="footer__social"
+            ><i class="bx bxl-linkedin"></i
+          ></a>
+          <a href="https://github.com/calebkwakye" class="footer__social"
+            ><i class="bx bxl-github"></i
+          ></a>
+          <a
+            href="https://www.instagram.com/kaylebparker/"
+            class="footer__social"
+            ><i class="bx bxl-instagram"></i
+          ></a>
+        </div>
+
+        <div class="footer__data">
+          <h2 class="footer__title">LOCATION</h2>
+          <p class="footer__text">410 Westhampton Way, Richmond, Virginia</p>
+        </div>
+      </div>
+      <p class="footer__copy">&#169; 2023 Caleb Kwakye.</p>
+    </footer>
+
+    <!--===== SCROLL REVEAL =====-->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!--===== MAIN JS =====-->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+  </body>
+</html>
